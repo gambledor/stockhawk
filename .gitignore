@@ -1,0 +1,8 @@
+.DS_Store
+.gradle
+.idea
+.StockHawk.iml
+*.iml
+local.properties
+build
+gradle
