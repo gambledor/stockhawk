@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.udacity.stockhawk.R;
@@ -53,6 +54,12 @@ public class StockWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+        if (intent != null) {
+            String intentAction = intent.getAction();
+            Log.d(TAG, "onReceive got action " + intentAction);
+            if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intentAction)) {
+            }
+        }
     }
 
 }

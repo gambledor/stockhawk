@@ -9,16 +9,21 @@ import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.databinding.ActivityDetailBinding;
 
+import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,22 +119,37 @@ public class DetailActivity extends Activity {
         // retrieve the view line chart
         LineChart lineChart = mBinding.lineChart;
         LineData lineData = new LineData(dataSet);
+
+        // Add dollar sign to yAxis labels
+        final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+        lineData.setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                return "$" + numberFormat.format(value);
+            }
+        });
+
         lineChart.setData(lineData);
         lineChart.setAutoScaleMinMaxEnabled(true);
         lineChart.setKeepPositionOnRotation(true);
 
+        Description description = new Description();
+        description.setText(getString(R.string.currency_label));
+        lineChart.setDescription(description);
+
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//        xAxis.setGranularity(1f);
         xAxis.setTextSize(10f);
         xAxis.setTextColor(R.color.colorPrimary);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(true);
+
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float position, AxisBase axis) {
                 long timestamp = xAxisValues[xAxisValues.length - (int)position - 1];
-                return new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH).format(new Date(timestamp));
+                return dateFormat.format(new Date(timestamp));
             }
         });
 

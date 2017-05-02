@@ -77,6 +77,8 @@ public class StockWidgetService extends RemoteViewsService {
             float absoluteChange = cvs.getAsFloat(Contract.Quote.COLUMN_ABSOLUTE_CHANGE);
             if (absoluteChange < 0) {
                 remoteViews.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_red);
+            } else {
+                remoteViews.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_green);
             }
 
             float percentageChange = cvs.getAsFloat(Contract.Quote.COLUMN_PERCENTAGE_CHANGE);

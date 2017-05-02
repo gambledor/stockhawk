@@ -16,8 +16,10 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/padding_extra_large"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingRight="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_extra_large"
             android:contentDescription="@string/stock_list"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -27,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin_extra_large"
         android:onClick="button"
         android:src="@drawable/fab_plus"
         app:backgroundTint="@color/material_blue_500"

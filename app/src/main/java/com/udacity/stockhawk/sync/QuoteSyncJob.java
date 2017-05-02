@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.util.WidgetUpdater;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,8 +43,6 @@ public final class QuoteSyncJob {
 
     static void getQuotes(Context context) {
 
-//        Timber.d("Running sync job");
-
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
         from.add(Calendar.YEAR, -YEARS_OF_HISTORY);
@@ -55,7 +54,6 @@ public final class QuoteSyncJob {
             stockCopy.addAll(stockPref);
             String[] stockArray = stockPref.toArray(new String[stockPref.size()]);
 
-//            Timber.d("stockCopy %s", stockCopy.toString());
 
             if (stockArray.length == 0) {
                 return;
@@ -65,14 +63,10 @@ public final class QuoteSyncJob {
 
             Iterator<String> iterator = stockCopy.iterator();
 
-//            Timber.d(quotes.toString());
-
             ArrayList<ContentValues> quoteCVs = new ArrayList<>();
 
             while (iterator.hasNext()) {
                 String symbol = iterator.next();
-//                Timber.d("symbol %s", symbol);
-
 
                 Stock stock = quotes.get(symbol);
                 if (stock == null || !stock.isValid()) {
@@ -120,14 +114,14 @@ public final class QuoteSyncJob {
             Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
             context.sendBroadcast(dataUpdatedIntent);
 
+            // To update the widget content
+            WidgetUpdater.update(context);
         } catch (IOException exception) {
             Timber.e(exception, "Error fetching stock quotes");
         }
     }
 
     private static void schedulePeriodic(Context context) {
-//        Timber.d("Scheduling a periodic task");
-
 
         JobInfo.Builder builder = new JobInfo.Builder(PERIODIC_ID, new ComponentName(context, QuoteJobService.class));
 

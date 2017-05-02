@@ -1,3 +1,9 @@
 <resources>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="padding_extra_large">16dp</dimen>
+
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_extra_large">16dp</dimen>
+
+    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="text_size_extra_larger">48sp</dimen>
 </resources>
